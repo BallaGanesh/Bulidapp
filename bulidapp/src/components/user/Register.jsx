@@ -6,14 +6,19 @@ import { TiArrowRepeatOutline } from "react-icons/ti";
 import { MdAlternateEmail } from "react-icons/md";
 import { validatePassword } from "val-pass";
 import toast from 'react-hot-toast';
+import empServices from '../../service/empServices';
+import { useNavigate } from 'react-router-dom';
+
 
 const Register = () => {
+  const navigate=useNavigate()
   let [matched,setmatched]=useState(true)
   const[errorMessage,setErrorMessage]=useState("")
+  
  
 
   let[formData,setFromData]=useState({
-    username:"",
+    userName:"",
     password:"",
     email:"",
     name:""
@@ -47,6 +52,21 @@ const Register = () => {
   return
     }
  console.log(formData);
+(async()=>{
+try {
+  let data=await empServices.regiUser(formData)
+  if(data.status==201){
+    toast.success("regisretd succefully")
+    navigate("/login")
+
+  }else{
+    toast.error("something went wrong")
+  }
+} catch (error) {
+  toast.error("something went wrong")
+}
+})()
+ 
   }
   
 
@@ -74,7 +94,7 @@ const Register = () => {
       </div>
 
        <div className='h-10 flex justify-center items-center  border-2 rounded-md w-full px-4 '>
-          <input type="text" name="username" placeholder='Enter your UserName' className='outline-0 px-9 h-7 w-full' onChange={handleChange}/>
+          <input type="text" name="userName" placeholder='Enter your UserName' className='outline-0 px-9 h-7 w-full' onChange={handleChange}/>
           <span><BiRename /></span>
       </div>
 
