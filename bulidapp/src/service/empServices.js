@@ -10,6 +10,15 @@ let empServices={
         console.log(error);
         return error
        }
+    },
+    loginUser:async(payload)=>{
+       try {
+         let data=await axiosInstance.post("/login",payload)
+        return data
+       } catch (error) {
+        console.log(error);
+        return error
+       }
     }
 }
 
