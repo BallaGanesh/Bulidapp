@@ -34,7 +34,7 @@ try {
   let data=await empServices.loginUser(formData)
   if(data.status==200){
     toast.success("Login succefully")
-     Navigate("/main")
+     Navigate("/home")
 
   }else{
     toast.error(data.
