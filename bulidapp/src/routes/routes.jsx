@@ -7,6 +7,7 @@ import About from "../components/user/main/about/About";
 import FilterBills from "../components/user/main/fliterBills/FilterBills";
 import Main from "../components/user/main/Main";
 import Home from "../components/user/main/home/Home";
+import AddItems from "../components/user/main/addBills/addItems/AddItems";
 
 let routes=createBrowserRouter([
     {
@@ -33,15 +34,24 @@ let routes=createBrowserRouter([
             },
             {
                 path:"addBills",
-                element:<AddBills></AddBills>
-            },
+                element:<AddBills></AddBills>,
+                children:[
+                    {
+                        
+                        path:"addItems",
+                        element:<AddItems></AddItems>
+                    }
+                ]
+            }
+                ,
+            
             {
                 path:"filterBills",
                 element:<FilterBills></FilterBills>
             },
-            
-        ]
-    }
+             
+            ] 
+        }
 ])
 
 export default routes;

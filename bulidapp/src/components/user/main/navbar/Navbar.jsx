@@ -11,7 +11,7 @@ const Navbar = () => {
         setshow(!show)
     }
   return (
-    <div className={`w-full h-[80px] bg-black flex justify-around items-center text-xl text-amber-50 gap-4 max-sm:justify-start max-sm:px-8 ${show?'h-[200px] flex flex-col justify-around gap-2.5 items-start py-2.5':""}sm:flex-row sm:h-[80px] sm:justify-around sm:items-center`}>
+    <div className={` fixed w-full h-[80px] bg-black flex justify-around items-center text-xl text-amber-50 gap-4 max-sm:justify-start max-sm:px-8 ${show?'h-[200px] flex flex-col justify-around gap-2.5 items-start py-2.5':""}sm:flex-row sm:h-[80px] sm:justify-around sm:items-center`}>
 
       <div className='hidden max-sm:flex'>
 
