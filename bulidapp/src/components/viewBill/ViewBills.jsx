@@ -1,28 +1,19 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { contextApi } from '../../../context/Context'
-import empServices from '../../../../service/empServices';
-import { useNavigate } from 'react-router-dom';
-import toast from 'react-hot-toast';
+import { useLocation, useNavigate } from 'react-router-dom'
+import toast from 'react-hot-toast'
+import { contextApi } from '../context/Context'
+import empServices from '../../service/empServices'
 
-const Home = () => {
 
-const {globalState}=useContext(contextApi)
-console.log(globalState);
-
-const navigate=useNavigate()
-
- const [allBills,setAllBills]=useState([])
-  
-  useEffect(()=>{
-    (async ()=>{
-     let data=await empServices.allBills(globalState.token)
-     if(data.status==200){
-      setAllBills((preVal)=>([...preVal,...data.data.bills]))
-     }
-    })();
-  },[])
-
-  console.log(allBills);
+const ViewBills = () => {
+    const { globalState } = useContext(contextApi)
+  const [allBills, setAllBills] = useState([])
+  const navigate=useNavigate()
+  const {state}=useLocation()
+// console.log(state);
+useEffect(()=>{
+    setAllBills(state)
+},[])
 
 
   const handelUpateBills=(bill)=>{
@@ -30,9 +21,10 @@ const navigate=useNavigate()
     
     navigate("updateBills",{state:bill})
   }
-  const handeldeleteBills=(id)=>{
+  const handelDeleteClick=(id)=>{
     console.log(id);
-  (async()=>{
+    
+    (async()=>{
    try {
        let data=await empServices.deleteBills(globalState.token,id)
       console.log(data);
@@ -51,10 +43,8 @@ const navigate=useNavigate()
       
     })()
   }
-
-
   return (
-     <div className="w-full min-h-screen p-28 bg-gray-100 flex flex-wrap gap-6 justify-center">
+ <div className="w-full min-h-screen p-6 bg-gray-100 flex flex-wrap gap-6 justify-center">
       {allBills.map((bill, index) => (
         <div
           key={index}
@@ -67,13 +57,16 @@ const navigate=useNavigate()
             <p><span className="font-semibold">PO No:</span> {bill.PoNo}</p>
             <p><span className="font-semibold">Total Amount:</span> ₹{bill.totalAmount}</p>
             <p><span className="font-semibold">Invoice Date:</span> {new Date(bill.invoiceDate).toLocaleDateString()}</p>
-          </div>
-
-          <div className='flex w-full gap-4'>
-            <button className='grow size-full h-9 rounded-sm bg-green-400' onClick={()=>{
-                handelUpateBills(bill)}}>Update</button>
-            <button className='grow size-full h-9 rounded-sm bg-red-500' onClick={()=>{
-                handeldeleteBills(bill._id)}}>delete</button>
+            <div className='flex w-full h-8 gap-2'>
+              <button className='grow size-full bg-amber-500 rounded-sm' onClick={()=>{
+                handelUpateBills(bill)
+              }}>Update</button>
+              <button className='grow size-full bg-red-500 rounded-sm' onClick={
+                ()=>{
+                  handelDeleteClick(bill._id)
+                }
+              }>Delete</button>
+            </div>
           </div>
         </div>
       ))}
@@ -81,4 +74,4 @@ const navigate=useNavigate()
   )
 }
 
-export default Home
+export default ViewBills
